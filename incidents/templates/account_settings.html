@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Settings</title>
+    <style>
+      :root {
+        --bg: #f3f6fb;
+        --panel: #ffffff;
+        --panel-alt: #f7f9fc;
+        --border: #e6ebf3;
+        --primary: #3b82f6;
+        --primary-dark: #1d4ed8;
+        --text: #111827;
+        --muted: #6b7280;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #eef4ff, var(--bg));
+        color: var(--text);
+      }
+
+      .layout {
+        max-width: 1440px;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 28px;
+        padding: 0 20px;
+      }
+
+      .sidebar,
+      .panel,
+      .profile-banner {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .sidebar {
+        padding: 20px 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 8px 10px 18px;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), #7c3aed);
+        color: white;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .menu a {
+        text-decoration: none;
+        color: var(--muted);
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: 0.2s ease;
+      }
+
+      .menu a.active {
+        background: #eef4ff;
+        color: var(--primary-dark);
+      }
+
+      .menu a:hover {
+        background: #f5f7fb;
+        color: var(--text);
+      }
+
+      .sidebar-card {
+        margin-top: 24px;
+        background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        padding: 18px 16px;
+      }
+
+      .sidebar-card h4 {
+        margin: 0 0 8px;
+        font-size: 0.9rem;
+      }
+
+      .sidebar-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 0.85rem;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 6px 2px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 0.76rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.8rem, 2vw, 2.5rem);
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        border: none;
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .primary-btn {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 12px 20px rgba(59, 130, 246, 0.22);
+      }
+
+      .primary-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      .secondary-btn {
+        background: #eef4ff;
+        color: var(--primary-dark);
+      }
+
+      .profile-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 22px 24px;
+      }
+
+      .profile-meta {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #c7d2fe, #93c5fd);
+        display: grid;
+        place-items: center;
+        color: #1e3a8a;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .profile-meta h3 {
+        margin: 0 0 4px;
+        font-size: 1.2rem;
+      }
+
+      .profile-meta p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 22px;
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .panel h2 {
+        margin: 0 0 18px;
+        font-size: 1.12rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+        gap: 18px;
+      }
+
+      .field,
+      .full-width {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field label,
+      .full-width label {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      input,
+      select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel-alt);
+        padding: 12px 14px;
+        font-size: 0.96rem;
+        color: var(--text);
+        outline: none;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+      }
+
+      .full-width {
+        margin-top: 18px;
+      }
+
+      .security-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .security-item {
+        padding: 16px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .security-item:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .security-item h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .security-item p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 0.92rem;
+      }
+
+      .toggle-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .toggle-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .toggle-item:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+
+      .toggle-text strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .toggle-text span {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .switch {
+        position: relative;
+        width: 52px;
+        height: 30px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        inset: 0;
+        background-color: #dbe5f2;
+        border-radius: 999px;
+        transition: 0.2s ease;
+      }
+
+      .slider:before {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        left: 4px;
+        top: 4px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.2s ease;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+      }
+
+      .switch input:checked + .slider {
+        background-color: var(--success);
+      }
+
+      .switch input:checked + .slider:before {
+        transform: translateX(22px);
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .profile-banner,
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">R</div>
+          <span>RapidSOP</span>
+        </div>
+
+        <nav class="menu" aria-label="Sidebar navigation">
+          <a href="#" class="active">Account</a>
+          <a href="#">Security</a>
+          <a href="#">Notifications</a>
+          <a href="#">Billing</a>
+          <a href="#">Integrations</a>
+        </nav>
+
+        <div class="sidebar-card">
+          <h4>Account status</h4>
+          <p>Professional workspace plan is active and will renew on June 28, 2026.</p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h1>Account Settings</h1>
+          </div>
+          <button class="primary-btn" type="button">Save changes</button>
+        </header>
+
+        <section class="profile-banner">
+          <div class="profile-meta">
+            <div class="avatar">AS</div>
+            <div>
+              <h3>{{ request.user.get_full_name|default:request.user.username }}</h3>
+              <p>{{ request.user.email|default:'name@example.com' }}</p>
+            </div>
+          </div>
+          <button class="secondary-btn" type="button">Change photo</button>
+        </section>
+
+        <div class="grid">
+          <section class="panel">
+            <h2>Profile information</h2>
+            <form>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="firstName">First name</label>
+                  <input id="firstName" type="text" value="Alex" />
+                </div>
+                <div class="field">
+                  <label for="lastName">Last name</label>
+                  <input id="lastName" type="text" value="Stone" />
+                </div>
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input id="email" type="email" value="alex.stone@example.com" />
+                </div>
+                <div class="field">
+                  <label for="phone">Phone</label>
+                  <input id="phone" type="tel" value="+1 (415) 555-0118" />
+                </div>
+              </div>
+
+              <div class="full-width">
+                <label for="role">Role</label>
+                <input id="role" type="text" value="Operations Manager" />
+              </div>
+            </form>
+          </section>
+
+          <section class="panel">
+            <h2>Security</h2>
+            <div class="security-stack">
+              <div class="security-item">
+                <h3>Change password</h3>
+                <p>Choose a password that is at least 8 characters long.</p>
+                <input type="password" placeholder="Current password" />
+              </div>
+
+              <div class="security-item">
+                <h3>Two-factor authentication</h3>
+                <p>Add an extra layer of security to your account.</p>
+                <button class="secondary-btn" type="button">Enable 2FA</button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <h2>Notifications</h2>
+          <div class="toggle-list">
+            <div class="toggle-item">
+              <div class="toggle-text">
+                <strong>Product updates</strong>
+                <span>Receive release notes and feature announcements.</span>
+              </div>
+              <label class="switch" aria-label="Product updates">
+                <input type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="toggle-item">
+              <div class="toggle-text">
+                <strong>Security alerts</strong>
+                <span>Get notified when important account events occur.</span>
+              </div>
+              <label class="switch" aria-label="Security alerts">
+                <input type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="toggle-item">
+              <div class="toggle-text">
+                <strong>Weekly summary</strong>
+                <span>Get a summary of activity and performance in your workspace.</span>
+              </div>
+              <label class="switch" aria-label="Weekly summary">
+                <input type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

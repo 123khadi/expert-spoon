@@ -1,0 +1,1 @@
+web: gunicorn rapidsop.wsgi --bind :8000

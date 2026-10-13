@@ -1,0 +1,28 @@
+RapidSOP - DC Office Mardan Control Room
+Project Documentation - October 2026
+
+1. PROJECT OVERVIEW:
+RapidSOP is a real-time incident reporting system for District Control Room Mardan. Citizen reports Flood/Fire/Accident, DC Office sees it LIVE on Map.
+
+2. LIVE PROOF (Aapke Screenshot se):
+URL: http://127.0.0.1:8000/dashboard/
+- Live Incidents Map - Mardan District WORKING
+- Active Incidents (1) - Flood - 34.2012, 72.0525 - WORKING
+- Status: Reported
+
+3. FEATURES FOR VIVA:
+- Citizen Form at / (Name, Email, Incident Type, Location, Description)
+- Dashboard at /dashboard/ (Map + List)
+- Admin Panel at /admin/
+- SQLite Database (db.sqlite3)
+
+4. TECHNOLOGIES:
+Python, Django, Leaflet.js (OpenStreetMap), HTML, Bootstrap 5
+
+5. HOW TO RUN (Sir ko ye batana hai):
+python manage.py runserver
+Form: http://127.0.0.1:8000/
+Dashboard: http://127.0.0.1:8000/dashboard/
+
+6. CONCLUSION:
+System is 100% Working and ready for Mardan District deployment.
